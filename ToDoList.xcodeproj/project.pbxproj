@@ -35,16 +35,6 @@
 			path = ToDoList;
 			sourceTree = "<group>";
 		};
-		2C399BFD2CBCDA5E00679FA6 /* ToDoListTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ToDoListTests;
-			sourceTree = "<group>";
-		};
-		2C399C072CBCDA5E00679FA6 /* ToDoListUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = ToDoListUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				2C399BEC2CBCDA5D00679FA6 /* ToDoList */,
-				2C399BFD2CBCDA5E00679FA6 /* ToDoListTests */,
-				2C399C072CBCDA5E00679FA6 /* ToDoListUITests */,
 				2C399BEB2CBCDA5D00679FA6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -130,9 +118,6 @@
 			dependencies = (
 				2C399BFC2CBCDA5E00679FA6 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				2C399BFD2CBCDA5E00679FA6 /* ToDoListTests */,
-			);
 			name = ToDoListTests;
 			packageProductDependencies = (
 			);
@@ -152,9 +137,6 @@
 			);
 			dependencies = (
 				2C399C062CBCDA5E00679FA6 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				2C399C072CBCDA5E00679FA6 /* ToDoListUITests */,
 			);
 			name = ToDoListUITests;
 			packageProductDependencies = (
