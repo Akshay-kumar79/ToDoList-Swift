@@ -10,13 +10,13 @@ import SwiftUI
 
 struct ListRowView: View {
     
-    let item: ItemModel
+    let item: TodoEntity
     
     var body: some View {
         HStack{
             Image(systemName: item.isCompleted ? "checkmark.circle" : "circle")
                 .foregroundColor(item.isCompleted ? .green : .red)
-            Text(item.title)
+            Text(item.name ?? "")
             Spacer()
         }
         .font(.title2)
@@ -26,11 +26,11 @@ struct ListRowView: View {
 
 #Preview{
     
-    let item1 = ItemModel(title: "Hello", isCompleted: false)
-    let item2 = ItemModel(title: "Hello", isCompleted: true)
-    
-    Group {
-        ListRowView(item: item1)
-        ListRowView(item: item2)
-    }
+//    let item1 = TodoEntity(name: "Hello", isCompleted: false)
+//    let item2 = ItemModel(name: "Hello", isCompleted: true)
+//
+//    Group {
+//        ListRowView(item: item1)
+//        ListRowView(item: item2)
+//    }
 }

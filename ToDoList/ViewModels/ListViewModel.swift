@@ -6,32 +6,41 @@
 //
 
 import Foundation
+import CoreData
 
 class ListViewModel: ObservableObject {
     
     @Published
-    var items: [ItemModel] = []{
-        didSet {
-            saveItems()
-        }
-    }
-    let itemsKey = "items_list"
+    var items: [TodoEntity] = []
+    let container: NSPersistentContainer
     
     init() {
+        container = NSPersistentContainer(name: "TodoContainer")
+        container.loadPersistentStores { (description, error) in
+            if let error = error{
+                print("Error loading persistent store: \(error)")
+            }else{
+                print("Successfully loaded persistent store")
+            }
+        }
         getItems()
     }
     
     func getItems() {
-        guard
-            let newItemsJson = UserDefaults.standard.data(forKey: itemsKey),
-            let newItems = try? JSONDecoder().decode([ItemModel].self, from: newItemsJson)
-        else { return }
+        let request = NSFetchRequest<TodoEntity>(entityName: "TodoEntity")
         
-        items.append(contentsOf: newItems)
+        do {
+            items = try container.viewContext.fetch(request)
+        }catch let error {
+            print("Error fetching items: \(error)")
+        }
     }
 
     func deleteItem(indexSet: IndexSet){
-        items.remove(atOffsets: indexSet)
+        guard let index = indexSet.first else { return }
+        let entity = items[index]
+        container.viewContext.delete(entity)
+        saveItems()
     }
     
     func moveItem(from: IndexSet, to: Int){
@@ -39,19 +48,23 @@ class ListViewModel: ObservableObject {
     }
     
     func addItem(title: String){
-        let newItem = ItemModel(title: title, isCompleted: false)
-        items.append(newItem)
+        let newItem = TodoEntity(context: container.viewContext)
+        newItem.name = title
+        newItem.isCompleted = false
+        saveItems()
     }
     
-    func toggleCompletion(item: ItemModel){
-        if let index = items.firstIndex(where: { $0.id == item.id }){
-            items[index] = item.toggleCompletion()
-        }
+    func toggleCompletion(item: TodoEntity){
+        item.isCompleted = !item.isCompleted
+        saveItems()
     }
     
     func saveItems(){
-        if let encodedData = try? JSONEncoder().encode(items){
-            UserDefaults.standard.set(encodedData, forKey: itemsKey)
+        do{
+            try container.viewContext.save()
+            getItems()
+        }catch let error{
+            print("Error saving items: \(error)")
         }
     }
     

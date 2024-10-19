@@ -19,7 +19,7 @@ struct ListView: View {
                     .multilineTextAlignment(.center)
             }else {
                 List{
-                    ForEach(listViewModel.items){ item in
+                    ForEach(listViewModel.items, id: \.self){ item in
                         ListRowView(item: item)
                             .onTapGesture {
                                 withAnimation(.linear) {
